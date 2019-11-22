@@ -31,7 +31,6 @@ public class NotiAdapter extends RecyclerView.Adapter<NotiAdapter.NotiHolder> {
     @Override
     public void onBindViewHolder(final NotiHolder holder, int position) {
         final modelNoti notification = listNoti.get(position);
-        holder.tvDate.setText(notification.getDate());
         holder.tvTitle.setText(notification.getTitle());
         holder.tvContent.setText(notification.getContent());
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +53,6 @@ public class NotiAdapter extends RecyclerView.Adapter<NotiAdapter.NotiHolder> {
         private TextView tvContent;
         public NotiHolder(View itemView) {
             super(itemView);
-            tvDate = (TextView) itemView.findViewById(R.id.tv_date);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             tvContent = (TextView) itemView.findViewById(R.id.tv_content);
         }
