@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_margin="10dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="notifier app v1.0"
+        android:textColor="#2B3F8D"
+        android:textSize="25sp"
+        android:textStyle="bold">
+    </TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="created by Bad Intentions team"
+        android:textColor="#000000"
+        android:textSize="20sp">
+    </TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Released in 11/27/2019"
+        android:textColor="#000000"
+        android:textSize="20sp">
+    </TextView>
+</LinearLayout>
