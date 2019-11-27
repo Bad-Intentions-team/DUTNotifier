@@ -33,12 +33,6 @@ public class NotiAdapter extends RecyclerView.Adapter<NotiAdapter.NotiHolder> {
         final modelNoti notification = listNoti.get(position);
         holder.tvTitle.setText(notification.getTitle());
         holder.tvContent.setText(notification.getContent());
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                activity.startActivity(new Intent(activity,DetailArticleActivity.class).putExtra("Article",article));
-//            }
-//        });
     }
 
     @Override
@@ -48,7 +42,6 @@ public class NotiAdapter extends RecyclerView.Adapter<NotiAdapter.NotiHolder> {
 
     class NotiHolder extends RecyclerView.ViewHolder{
 
-        private TextView tvDate;
         private TextView tvTitle;
         private TextView tvContent;
         public NotiHolder(View itemView) {

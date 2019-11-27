@@ -1,10 +1,16 @@
 package com.example.dutnotifier.model;
 
 public class modelNoti {
+    int id;
     String title;
     String content;
 
-    public modelNoti() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -23,8 +29,12 @@ public class modelNoti {
         this.content = content;
     }
 
-    public modelNoti(String date, String title, String content) {
+    public modelNoti(int id, String title, String content) {
+        this.id = id;
         this.title = title;
         this.content = content;
+    }
+
+    public modelNoti() {
     }
 }
