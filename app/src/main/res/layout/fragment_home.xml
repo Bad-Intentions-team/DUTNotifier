@@ -4,8 +4,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <androidx.recyclerview.widget.RecyclerView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyler_category"/>
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        >
+        <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:defaultQueryHint="Nhap lop HP tai day"
+            android:id="@+id/searchview"
+            ></SearchView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recyler_category"/>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

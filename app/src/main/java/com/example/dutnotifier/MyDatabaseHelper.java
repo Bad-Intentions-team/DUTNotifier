@@ -6,10 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.dutnotifier.model.modelNoti;
+import com.example.dutnotifier.model.ModelNoti;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
@@ -45,7 +44,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addNoti(modelNoti noti) {
+    public void addNoti(ModelNoti noti) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_NOTI_TITLE, noti.getTitle());
@@ -71,8 +70,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return cursor.getCount();
     }
 
-    public ArrayList<modelNoti> getAllNotis() {
-        ArrayList<modelNoti> notiList = new ArrayList<modelNoti>();
+    public ArrayList<ModelNoti> getAllNotis() {
+        ArrayList<ModelNoti> notiList = new ArrayList<ModelNoti>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_NOTI;
 
@@ -83,7 +82,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         // Duyệt trên con trỏ, và thêm vào danh sách.
         if (cursor.moveToFirst()) {
             do {
-                modelNoti noti = new modelNoti();
+                ModelNoti noti = new ModelNoti();
                 noti.setId(Integer.parseInt(cursor.getString(0)));
                 noti.setTitle(cursor.getString(1));
                 noti.setContent(cursor.getString(2));
@@ -94,5 +93,21 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         // return note list
         return notiList;
+    }
+    public ArrayList<ModelNoti> getSearch(String s){
+        String inputClass = s.toLowerCase();
+        ArrayList<ModelNoti> listNoti = new ArrayList<ModelNoti>();
+        String script = "select * from " + TABLE_NOTI + " WHERE " + COLUMN_NOTI_TITLE + " LIKE '%" + inputClass +"%'";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(script,null);
+        while(cursor.moveToNext()){
+            ModelNoti noti = new ModelNoti();
+            noti.setId(cursor.getInt(0));
+            noti.setTitle(cursor.getString(1));
+            noti.setContent(cursor.getString(2));
+            listNoti.add(noti);
+        }
+        return listNoti;
     }
 }

@@ -5,8 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,7 +16,7 @@ import com.example.dutnotifier.INTERNET.ConnectionReceiver;
 import com.example.dutnotifier.MyDatabaseHelper;
 import com.example.dutnotifier.NotiAdapter;
 import com.example.dutnotifier.R;
-import com.example.dutnotifier.model.modelNoti;
+import com.example.dutnotifier.model.ModelNoti;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -27,9 +26,11 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements SearchView.OnQueryTextListener {
     public static final String MY_URL = "http://sv.dut.udn.vn/G_Thongbao_LopHP.aspx";
     private RecyclerView recycler;
+    private SearchView searchView;
+    ArrayList<ModelNoti> listNoti = new ArrayList<>();
     private NotiAdapter notiAdapter;
     private MyDatabaseHelper db;
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -38,6 +39,9 @@ public class HomeFragment extends Fragment {
         db = new MyDatabaseHelper(getActivity());
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         recycler = (RecyclerView) root.findViewById(R.id.recyler_category);
+        searchView = (SearchView) root.findViewById(R.id.searchview);
+
+        searchView.setOnQueryTextListener(this);
 
         configRecyclerView();
         new DownloadTask().execute(MY_URL);
@@ -48,15 +52,34 @@ public class HomeFragment extends Fragment {
         recycler.hasFixedSize();
         recycler.setLayoutManager(layoutManager);
     }
+
+    private void setAdapter(ArrayList<ModelNoti> arrContact) {
+         notiAdapter = new NotiAdapter(getActivity(), listNoti);
+        recycler.setAdapter(notiAdapter);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+         listNoti = db.getSearch(s.toLowerCase());
+        setAdapter(listNoti);
+        notiAdapter.notifyDataSetChanged();
+        return true;
+    }
+
     //Download HTML bằng AsynTask
-    private class DownloadTask extends AsyncTask<String, Void, ArrayList<modelNoti>> {
+    private class DownloadTask extends AsyncTask<String, Void, ArrayList<ModelNoti>> {
 
         private static final String TAG = "DownloadTask";
 
         @Override
-        protected ArrayList<modelNoti> doInBackground(String... strings) {
+        protected ArrayList<ModelNoti> doInBackground(String... strings) {
             Document document = null;
-            ArrayList<modelNoti> listNoti = new ArrayList<>();
+
             if( checkInternet() == true) {
                 db.deleteTable();
                 try {
@@ -75,7 +98,7 @@ public class HomeFragment extends Fragment {
                         Element b = element.getElementsByTag("p").first();
                         for(int i=1;i<25;i++)
                         {
-                            modelNoti noti = new modelNoti();
+                            ModelNoti noti = new ModelNoti();
                             a = temp;
                             if(b==a) b = b.nextElementSibling();
                             noti.setTitle(a.text());
@@ -104,10 +127,10 @@ public class HomeFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<modelNoti> notis) {
-            super.onPostExecute(notis);
+        protected void onPostExecute(ArrayList<ModelNoti> listNoti) {
+            super.onPostExecute(listNoti);
             //Setup data recyclerView
-            notiAdapter = new NotiAdapter(getActivity(),notis);
+            notiAdapter = new NotiAdapter(getActivity(),listNoti);
             recycler.setAdapter(notiAdapter);
         }
     }

@@ -9,15 +9,15 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.dutnotifier.model.modelNoti;
+import com.example.dutnotifier.model.ModelNoti;
 
 import java.util.ArrayList;
 
 public class NotiAdapter extends RecyclerView.Adapter<NotiAdapter.NotiHolder> {
     private Activity activity;
-    private ArrayList<modelNoti> listNoti;
+    private ArrayList<ModelNoti> listNoti;
 
-    public NotiAdapter(Activity activity, ArrayList<modelNoti> listNoti) {
+    public NotiAdapter(Activity activity, ArrayList<ModelNoti> listNoti) {
         this.activity = activity;
         this.listNoti = listNoti;
     }
@@ -30,7 +30,7 @@ public class NotiAdapter extends RecyclerView.Adapter<NotiAdapter.NotiHolder> {
 
     @Override
     public void onBindViewHolder(final NotiHolder holder, int position) {
-        final modelNoti notification = listNoti.get(position);
+        final ModelNoti notification = listNoti.get(position);
         holder.tvTitle.setText(notification.getTitle());
         holder.tvContent.setText(notification.getContent());
     }

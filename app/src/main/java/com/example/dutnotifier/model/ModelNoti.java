@@ -1,6 +1,6 @@
 package com.example.dutnotifier.model;
 
-public class modelNoti {
+public class ModelNoti {
     int id;
     String title;
     String content;
@@ -29,12 +29,12 @@ public class modelNoti {
         this.content = content;
     }
 
-    public modelNoti(int id, String title, String content) {
+    public ModelNoti(int id, String title, String content) {
         this.id = id;
         this.title = title;
         this.content = content;
     }
 
-    public modelNoti() {
+    public ModelNoti() {
     }
 }
