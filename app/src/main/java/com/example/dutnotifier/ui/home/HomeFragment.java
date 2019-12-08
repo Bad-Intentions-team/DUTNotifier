@@ -2,6 +2,8 @@ package com.example.dutnotifier.ui.home;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -45,7 +47,8 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         recycler = (RecyclerView) root.findViewById(R.id.recyler_category);
         searchView = (SearchView) root.findViewById(R.id.searchview);
-        thongbao("đây là thông báo thử nghiệm");
+ //       thongbao("đây là thông báo thử nghiệm");
+        loadThongbao();
         searchView.setOnQueryTextListener(this);
         configRecyclerView();
         new DownloadTask().execute(MY_URL);
@@ -143,7 +146,7 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         boolean check = ConnectionReceiver.isConnected();
         return check;
     }
-    public void thongbao(String s){
+    public void thongbao(String title, String content){
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
             NotificationChannel channel =
                     new NotificationChannel("MyNotifications","MyNotifications", NotificationManager.IMPORTANCE_DEFAULT);
@@ -153,11 +156,21 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
 
         }
         NotificationCompat.Builder builder =new NotificationCompat.Builder(getActivity(),"MyNotifications")
-                .setContentTitle("Thông báo về lớp HP")
+                .setContentTitle(title)
                 .setSmallIcon(R.drawable.ic_school)
                 .setAutoCancel(true)
-                .setContentText(s);
+                .setContentText(content);
         NotificationManagerCompat manager = NotificationManagerCompat.from(getActivity());
         manager.notify(0,builder.build());
+    }
+    private void loadThongbao(){
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("info", Context.MODE_PRIVATE);
+        if(sharedPreferences!=null){
+            String s = sharedPreferences.getString("class","17Nh.11");
+            ArrayList<ModelNoti> list = db.getSearch(s);
+            for(ModelNoti modelNoti:list) {
+                thongbao(modelNoti.getTitle(),modelNoti.getContent());
+            }
+        }
     }
 }

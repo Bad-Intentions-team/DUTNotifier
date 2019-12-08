@@ -16,7 +16,7 @@
         tools:layout="@layout/fragment_aboutus" />
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.dutnotifier.ui.search.SearchFragment"
+        android:name="com.example.dutnotifier.ui.your_class.YourClassFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_your_class" />
 </navigation>
