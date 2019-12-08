@@ -1,6 +1,9 @@
 package com.example.dutnotifier.ui.home;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,9 +45,8 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         recycler = (RecyclerView) root.findViewById(R.id.recyler_category);
         searchView = (SearchView) root.findViewById(R.id.searchview);
-
+        thongbao("đây là thông báo thử nghiệm");
         searchView.setOnQueryTextListener(this);
-
         configRecyclerView();
         new DownloadTask().execute(MY_URL);
         return root;
@@ -138,5 +142,22 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
     private boolean checkInternet(){
         boolean check = ConnectionReceiver.isConnected();
         return check;
+    }
+    public void thongbao(String s){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            NotificationChannel channel =
+                    new NotificationChannel("MyNotifications","MyNotifications", NotificationManager.IMPORTANCE_DEFAULT);
+
+            NotificationManager manager=getActivity().getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+
+        }
+        NotificationCompat.Builder builder =new NotificationCompat.Builder(getActivity(),"MyNotifications")
+                .setContentTitle("Thông báo về lớp HP")
+                .setSmallIcon(R.drawable.ic_school)
+                .setAutoCancel(true)
+                .setContentText(s);
+        NotificationManagerCompat manager = NotificationManagerCompat.from(getActivity());
+        manager.notify(0,builder.build());
     }
 }
