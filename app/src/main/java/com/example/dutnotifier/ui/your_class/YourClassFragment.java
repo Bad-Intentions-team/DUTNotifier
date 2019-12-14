@@ -16,33 +16,39 @@ import androidx.fragment.app.Fragment;
 import com.example.dutnotifier.R;
 
 public class YourClassFragment extends Fragment {
-    private EditText mEdtInput;
+    private EditText mEdtInputGrade, mEdtInputGroup;
     private Button mBtnSave;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_your_class, container, false);
-        mEdtInput = (EditText) root.findViewById(R.id.edt_input);
+        mEdtInputGrade = (EditText) root.findViewById(R.id.edt_input_grade);
+        mEdtInputGroup = (EditText) root.findViewById(R.id.edt_input_group);
         mBtnSave = (Button) root.findViewById(R.id.btn_save);
-        loadClass();
+        loadYourClass();
         mBtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = getContext().getSharedPreferences("info", Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("INFO", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("class",mEdtInput.getText().toString());
+                String c = mEdtInputGrade.getText().toString() + ".Nh"+ mEdtInputGroup.getText().toString();
+                editor.putString("GRADE",mEdtInputGrade.getText().toString());
+                editor.putString("GROUP",mEdtInputGroup.getText().toString());
+                editor.putString("CLASS",c);
                 editor.apply();
-                Toast.makeText(getContext(),"Your class saved",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"Your class "+ c + " is saved",Toast.LENGTH_LONG).show();
             }
         });
         return root;
     }
-    private void loadClass(){
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("info", Context.MODE_PRIVATE);
+    private void loadYourClass(){
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("INFO", Context.MODE_PRIVATE);
         if(sharedPreferences!=null){
-            String s = sharedPreferences.getString("class","17.Nh11");
-            mEdtInput.setText(s);
+            String grade = sharedPreferences.getString("GRADE","");
+            String group = sharedPreferences.getString("GROUP","");
+            mEdtInputGrade.setText(grade);
+            mEdtInputGroup.setText(group);
         }
     }
 

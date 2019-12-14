@@ -115,9 +115,14 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
                                 noti.setContent(arr[j]);
                                 j++;
                             }
+                            String content = "";
                             while(b != temp) {
-                                noti.setContent(b.text());
-                                b= b.nextElementSibling();
+                                if(b.nextElementSibling() != temp) {
+                                    content += b.text() + "\n";
+                                }
+                                else content += b.text();
+                                b = b.nextElementSibling();
+                                    noti.setContent(content);
                             }
                             listNoti.add(noti);
                             db.addNoti(noti);
@@ -164,9 +169,9 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         manager.notify(0,builder.build());
     }
     private void loadThongbao(){
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("info", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("INFO", Context.MODE_PRIVATE);
         if(sharedPreferences!=null){
-            String s = sharedPreferences.getString("class","17Nh.11");
+            String s = sharedPreferences.getString("CLASS","");
             ArrayList<ModelNoti> list = db.getSearch(s);
             for(ModelNoti modelNoti:list) {
                 thongbao(modelNoti.getTitle(),modelNoti.getContent());
