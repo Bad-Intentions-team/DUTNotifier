@@ -19,7 +19,6 @@ public class YourClassFragment extends Fragment {
     private EditText mEdtInputGrade, mEdtInputGroup;
     private Button mBtnSave;
 
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_your_class, container, false);
@@ -37,7 +36,7 @@ public class YourClassFragment extends Fragment {
                 editor.putString("GROUP",mEdtInputGroup.getText().toString());
                 editor.putString("CLASS",c);
                 editor.apply();
-                Toast.makeText(getContext(),"Your class "+ c + " is saved",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"Lớp của bạn "+ c + " đã được lưu thành công",Toast.LENGTH_LONG).show();
             }
         });
         return root;

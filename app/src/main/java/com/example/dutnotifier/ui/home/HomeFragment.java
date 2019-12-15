@@ -26,23 +26,20 @@ import com.example.dutnotifier.MyDatabaseHelper;
 import com.example.dutnotifier.NotiAdapter;
 import com.example.dutnotifier.R;
 import com.example.dutnotifier.model.ModelNoti;
-import com.example.dutnotifier.Detail;
-
+import com.example.dutnotifier.DetailActivity;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment implements SearchView.OnQueryTextListener {
     public static final String MY_URL = "http://sv.dut.udn.vn/G_Thongbao_LopHP.aspx";
-    private RecyclerView recycler;
-    private SearchView searchView;
+    private RecyclerView mRecycler;
+    private SearchView mSearchView;
     ArrayList<ModelNoti> listNoti = new ArrayList<>();
     private NotiAdapter notiAdapter;
     private MyDatabaseHelper db;
@@ -51,24 +48,23 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
 
         db = new MyDatabaseHelper(getActivity());
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        recycler = (RecyclerView) root.findViewById(R.id.recyler_category);
-        searchView = (SearchView) root.findViewById(R.id.searchview);
- //       thongbao("đây là thông báo thử nghiệm");
+        mRecycler = (RecyclerView) root.findViewById(R.id.recyler_category);
+        mSearchView = (SearchView) root.findViewById(R.id.searchview);
         loadThongbao();
-        searchView.setOnQueryTextListener(this);
+        mSearchView.setOnQueryTextListener(this);
         configRecyclerView();
         new DownloadTask().execute(MY_URL);
         return root;
     }
     private void configRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(),1);
-        recycler.hasFixedSize();
-        recycler.setLayoutManager(layoutManager);
+        mRecycler.hasFixedSize();
+        mRecycler.setLayoutManager(layoutManager);
     }
 
     private void setAdapter(ArrayList<ModelNoti> arrContact) {
          notiAdapter = new NotiAdapter(getActivity(), listNoti);
-        recycler.setAdapter(notiAdapter);
+        mRecycler.setAdapter(notiAdapter);
     }
 
     @Override
@@ -84,15 +80,11 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         return true;
     }
 
-    //Download HTML bằng AsynTask
     private class DownloadTask extends AsyncTask<String, Void, ArrayList<ModelNoti>> {
-
         private static final String TAG = "DownloadTask";
-
         @Override
         protected ArrayList<ModelNoti> doInBackground(String... strings) {
             Document document = null;
-
             if( checkInternet() == true) {
                 db.deleteTable();
                 try {
@@ -144,22 +136,19 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
             }
                 return listNoti;
         }
-
         @Override
         protected void onPostExecute(ArrayList<ModelNoti> listNoti) {
             super.onPostExecute(listNoti);
-            //Setup data recyclerView
             notiAdapter = new NotiAdapter(getActivity(),listNoti);
-            recycler.setAdapter(notiAdapter);
+            mRecycler.setAdapter(notiAdapter);
         }
     }
-
     private boolean checkInternet(){
         boolean check = ConnectionReceiver.isConnected();
         return check;
     }
     public void thongbao(String title, String content){
-        Intent intent = new Intent(getActivity(), Detail.class);
+        Intent intent = new Intent(getActivity(), DetailActivity.class);
         intent.putExtra("TITLE",title);
         intent.putExtra("CONTENT",content);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

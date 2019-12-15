@@ -6,18 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class Detail extends AppCompatActivity {
-    public TextView tvTitle,tvContent;
+public class DetailActivity extends AppCompatActivity {
+    private TextView mTvTitle, mTvContent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        tvTitle =findViewById(R.id.tv_title);
-        tvContent=findViewById(R.id.tv_content);
+        mTvTitle =findViewById(R.id.tv_title);
+        mTvContent =findViewById(R.id.tv_content);
         Intent intent =getIntent();
         String title =intent.getStringExtra("TITLE");
         String content =intent.getStringExtra("CONTENT");
-        tvTitle.setText(title);
-        tvContent.setText(content);
+        mTvTitle.setText(title);
+        mTvContent.setText(content);
     }
 }

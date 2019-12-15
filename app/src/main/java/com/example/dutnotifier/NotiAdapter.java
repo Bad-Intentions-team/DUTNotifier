@@ -2,7 +2,6 @@ package com.example.dutnotifier;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,7 @@ public class NotiAdapter extends RecyclerView.Adapter<NotiAdapter.NotiHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity,Detail.class);
+                Intent intent = new Intent(activity, DetailActivity.class);
                 intent.putExtra("TITLE",noti.getTitle());
                 intent.putExtra("CONTENT",noti.getContent());
                 activity.startActivity(intent);
@@ -52,7 +51,6 @@ public class NotiAdapter extends RecyclerView.Adapter<NotiAdapter.NotiHolder> {
     }
 
     class NotiHolder extends RecyclerView.ViewHolder{
-
         private TextView mTvTitle;
         private TextView mTvContent;
         public NotiHolder(View itemView) {

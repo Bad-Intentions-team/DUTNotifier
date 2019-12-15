@@ -15,10 +15,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "SQLite";
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "Noti_Manager";
-
-    // Tên bảng: Note.
     private static final String TABLE_NOTI = "Notification";
-
     private static final String COLUMN_NOTI_ID ="Noti_Id";
     private static final String COLUMN_NOTI_TITLE ="Noti_Title";
     private static final String COLUMN_NOTI_CONTENT = "Noti_Content";
@@ -28,19 +25,15 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Script tạo bảng.
         String script = "CREATE TABLE " + TABLE_NOTI + "("
                 + COLUMN_NOTI_ID + " INTEGER PRIMARY KEY," + COLUMN_NOTI_TITLE + " TEXT,"
                 + COLUMN_NOTI_CONTENT + " TEXT" + ")";
-        // Chạy lệnh tạo bảng.
         db.execSQL(script);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Hủy (drop) bảng cũ nếu nó đã tồn tại.
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTI);
-        // Và tạo lại.
         onCreate(db);
     }
 
@@ -49,9 +42,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NOTI_TITLE, noti.getTitle());
         values.put(COLUMN_NOTI_CONTENT, noti.getContent());
-        // Crèn một dòng dữ liệu vào bảng.
         db.insert(TABLE_NOTI, null, values);
-        // Đóng kết nối database.
         db.close();
     }
 
@@ -61,44 +52,26 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public int getCountNoti() {
-        String countQuery = "SELECT  * FROM " + TABLE_NOTI;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-//        cursor.close();
-        // return count
-        return cursor.getCount();
-    }
-
     public ArrayList<ModelNoti> getAllNotis() {
-        ArrayList<ModelNoti> notiList = new ArrayList<ModelNoti>();
-        // Select All Query
+        ArrayList<ModelNoti> listNoti = new ArrayList<ModelNoti>();
         String selectQuery = "SELECT  * FROM " + TABLE_NOTI;
-
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-
-
-        // Duyệt trên con trỏ, và thêm vào danh sách.
         if (cursor.moveToFirst()) {
             do {
                 ModelNoti noti = new ModelNoti();
                 noti.setId(Integer.parseInt(cursor.getString(0)));
                 noti.setTitle(cursor.getString(1));
                 noti.setContent(cursor.getString(2));
-                // Thêm vào danh sách.
-                notiList.add(noti);
+                listNoti.add(noti);
             } while (cursor.moveToNext());
         }
-
-        // return note list
-        return notiList;
+        return listNoti;
     }
     public ArrayList<ModelNoti> getSearch(String s){
         String inputClass = s.toLowerCase();
         ArrayList<ModelNoti> listNoti = new ArrayList<ModelNoti>();
         String script = "select * from " + TABLE_NOTI + " WHERE " + COLUMN_NOTI_TITLE + " LIKE '%" + inputClass +"%'";
-
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(script,null);
         while(cursor.moveToNext()){
