@@ -15,8 +15,8 @@ public class Detail extends AppCompatActivity {
         tvTitle =findViewById(R.id.tv_title);
         tvContent=findViewById(R.id.tv_content);
         Intent intent =getIntent();
-        String title =intent.getStringExtra("title");
-        String content =intent.getStringExtra("content");
+        String title =intent.getStringExtra("TITLE");
+        String content =intent.getStringExtra("CONTENT");
         tvTitle.setText(title);
         tvContent.setText(content);
     }

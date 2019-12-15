@@ -1,6 +1,8 @@
 package com.example.dutnotifier.model;
 
-public class ModelNoti {
+import java.io.Serializable;
+
+public class ModelNoti implements Serializable {
     int id;
     String title;
     String content;

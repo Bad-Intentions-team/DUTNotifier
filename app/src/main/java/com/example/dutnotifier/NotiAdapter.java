@@ -1,6 +1,8 @@
 package com.example.dutnotifier;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +32,18 @@ public class NotiAdapter extends RecyclerView.Adapter<NotiAdapter.NotiHolder> {
 
     @Override
     public void onBindViewHolder(final NotiHolder holder, int position) {
-        final ModelNoti notification = listNoti.get(position);
-        holder.tvTitle.setText(notification.getTitle());
-        holder.tvContent.setText(notification.getContent());
+        final ModelNoti noti = listNoti.get(position);
+        holder.mTvTitle.setText(noti.getTitle());
+        holder.mTvContent.setText(noti.getContent());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity,Detail.class);
+                intent.putExtra("TITLE",noti.getTitle());
+                intent.putExtra("CONTENT",noti.getContent());
+                activity.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -42,12 +53,12 @@ public class NotiAdapter extends RecyclerView.Adapter<NotiAdapter.NotiHolder> {
 
     class NotiHolder extends RecyclerView.ViewHolder{
 
-        private TextView tvTitle;
-        private TextView tvContent;
+        private TextView mTvTitle;
+        private TextView mTvContent;
         public NotiHolder(View itemView) {
             super(itemView);
-            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
-            tvContent = (TextView) itemView.findViewById(R.id.tv_content);
+            mTvTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            mTvContent = (TextView) itemView.findViewById(R.id.tv_content);
         }
     }
 }

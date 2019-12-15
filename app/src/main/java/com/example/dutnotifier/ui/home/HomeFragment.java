@@ -33,8 +33,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment implements SearchView.OnQueryTextListener {
@@ -127,6 +129,7 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
                                 else content += b.text();
                                 b = b.nextElementSibling();
                                     noti.setContent(content);
+
                             }
                             listNoti.add(noti);
                             db.addNoti(noti);
@@ -157,8 +160,8 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
     }
     public void thongbao(String title, String content){
         Intent intent = new Intent(getActivity(), Detail.class);
-        intent.putExtra("title",title);
-        intent.putExtra("content",content);
+        intent.putExtra("TITLE",title);
+        intent.putExtra("CONTENT",content);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(),
                 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);

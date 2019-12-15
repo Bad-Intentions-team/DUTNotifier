@@ -26,6 +26,7 @@
                 android:textStyle="normal"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:maxLines="2"
                 android:text="Đây là tiêu đề thông báo"/>
             <TextView
                 android:layout_width="match_parent"
@@ -33,8 +34,20 @@
                 android:id="@+id/tv_content"
                 android:textSize="18sp"
                 android:textColor="#000"
-                android:layout_marginBottom="8dp"
+                android:maxLines="2"
                 android:text="Đây là nội dung thông báo"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:layout_marginTop="0dp"
+                android:text="Chi tiết >>"
+                android:layout_gravity="right"
+                android:textColor="#FF0000"
+                android:textStyle="italic"
+                android:textSize="14sp"
+                android:id="@+id/tv_detail"
+                ></TextView>
 
         </LinearLayout>
 
