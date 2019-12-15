@@ -2,7 +2,9 @@ package com.example.dutnotifier.ui.home;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -24,6 +26,8 @@ import com.example.dutnotifier.MyDatabaseHelper;
 import com.example.dutnotifier.NotiAdapter;
 import com.example.dutnotifier.R;
 import com.example.dutnotifier.model.ModelNoti;
+import com.example.dutnotifier.Detail;
+
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -152,20 +156,27 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         return check;
     }
     public void thongbao(String title, String content){
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+        Intent intent = new Intent(getActivity(), Detail.class);
+        intent.putExtra("title",title);
+        intent.putExtra("content",content);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(),
+                0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) {
             NotificationChannel channel =
-                    new NotificationChannel("MyNotifications","MyNotifications", NotificationManager.IMPORTANCE_DEFAULT);
+                    new NotificationChannel("MyNotifications", "MyNotifications", NotificationManager.IMPORTANCE_DEFAULT);
 
-            NotificationManager manager=getActivity().getSystemService(NotificationManager.class);
+            NotificationManager manager = getActivity().getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
-
         }
         NotificationCompat.Builder builder =new NotificationCompat.Builder(getActivity(),"MyNotifications")
                 .setContentTitle(title)
                 .setSmallIcon(R.drawable.ic_school)
-                .setAutoCancel(true)
-                .setContentText(content);
-        NotificationManagerCompat manager = NotificationManagerCompat.from(getActivity());
+                .setContentText(content)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+          NotificationManagerCompat manager = NotificationManagerCompat.from(getActivity());
         manager.notify(0,builder.build());
     }
     private void loadThongbao(){
