@@ -174,7 +174,7 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
     private void loadThongbao(){
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("INFO", Context.MODE_PRIVATE);
         if(sharedPreferences!=null){
-            String s = sharedPreferences.getString("CLASS","");
+            String s = sharedPreferences.getString("CLASS"," ");
             ArrayList<ModelNoti> list = db.getSearch(s);
             for(ModelNoti modelNoti:list) {
                 thongbao(modelNoti.getTitle(),modelNoti.getContent());

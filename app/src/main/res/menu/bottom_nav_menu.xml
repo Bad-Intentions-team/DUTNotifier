@@ -5,11 +5,11 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_home" />
     <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@android:drawable/ic_search_category_default"
-        android:title="@string/title_notifications" />
+        android:id="@+id/navigation_YourClass"
+        android:icon="@drawable/ic_school"
+        android:title="@string/title_YourClass" />
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_AboutUs"
         android:icon="@android:drawable/ic_dialog_info"
-        android:title="@string/title_dashboard" />
+        android:title="@string/title_AboutUs" />
 </menu>

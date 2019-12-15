@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DUTNotifier app v1.01"
+        android:text="DUTNotifier app v1.1"
         android:textColor="#2B3F8D"
         android:textSize="25sp"
         android:textStyle="bold">

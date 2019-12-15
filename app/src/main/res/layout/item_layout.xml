@@ -46,9 +46,7 @@
                 android:textColor="#FF0000"
                 android:textStyle="italic"
                 android:textSize="14sp"
-                android:id="@+id/tv_detail"
-                ></TextView>
-
+                android:id="@+id/tv_detail"/>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

@@ -2,6 +2,6 @@
     <string name="app_name">DUTNotifier</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">Thông báo</string>
-    <string name="title_dashboard">Giới thiệu </string>
-    <string name="title_notifications">Your class</string>
+    <string name="title_AboutUs">Giới thiệu </string>
+    <string name="title_YourClass">Your class</string>
 </resources>
